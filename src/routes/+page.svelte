@@ -1,22 +1,16 @@
 <script lang="ts">
 	import Lists from './components/lists.svelte';
+	// const mongoose = require('mongoose');
 
-	var MongoClient = require('mongodb').MongoClient;
-	var url = "mongodb://localhost:27017/";
 
-MongoClient.connect(url, function(err: any, db: any) {
-  if (err) throw err;
-  var dbo = db.db("todolist");
-  let list: string[] = [];
-  console.log("Database created!");
-  db.close();
-});
+
 	
+	let list: string[] = [];
 	let inputValue: string = '';
 
 	const onSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
-		dbo.todo("list").insertOne(inputValue);
+		list = [...list, inputValue];
 		inputValue = '';
 	};
 

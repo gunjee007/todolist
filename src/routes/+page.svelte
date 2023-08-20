@@ -22,12 +22,25 @@
 
 	const onSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
-		list = [...list, inputValue];
+		// list = [...list, inputValue];
+		
+	 axios.post("http://localhost:3000/todo", {
+		task: inputValue,
+		doneStatus: false		
+		})
+		.then((response) => {
+			
+		})
 		inputValue = '';
+		
 	};
+	
 
 	const onRemoveTask = (task: string) => {
-		list = list.filter((el) => el != task);
+		axios.delete('http://localhost:3000/todo/list', {data: {_id: task}})
+
+
+		// list = list.filter((el) => el != task);
 	};
 </script>
 

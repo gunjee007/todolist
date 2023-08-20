@@ -1,11 +1,23 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Lists from './components/lists.svelte';
 	// const mongoose = require('mongoose');
 
-
-
-	
+	import axios from 'axios';
 	let list: string[] = [];
+	onMount(() => {
+		axios
+			.get('http://localhost:3000/todo/list')
+			.then(({ data }) => {
+				if (data.status === 'success') {
+					list = data.result;
+				}
+			})
+			.catch((e) => {
+				alert('Network error!');
+			});
+	});
+
 	let inputValue: string = '';
 
 	const onSubmit = (e: SubmitEvent) => {
@@ -44,7 +56,7 @@
 
 	<div class="flex-col mt-5">
 		{#each list as li}
-			<Lists task={li} {onRemoveTask}/>
+			<Lists task={li} {onRemoveTask} />
 		{/each}
 	</div>
 </div>
